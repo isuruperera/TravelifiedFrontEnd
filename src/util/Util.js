@@ -46,11 +46,30 @@ export default (function () {
         }
     };
 
+    let putUserProfileParams = async (params) => {
+        try {
+            await AsyncStorage.setItem(Constants.UserProfileParams, JSON.stringify(params));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    let getUserProfileParams = async () => {
+        try {
+            let params = await AsyncStorage.getItem(Constants.UserProfileParams);
+            return JSON.parse(params);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return {
         getAuthToken : getAuthToken,
         putAuthToken: putAuthToken,
         removeAuthToken: removeAuthToken,
         getProfilePictureID: getProfilePictureID,
         putProfilePictureID: putProfilePictureID,
+        putUserProfileParams: putUserProfileParams,
+        getUserProfileParams: getUserProfileParams
     }
 }())

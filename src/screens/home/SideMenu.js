@@ -1,7 +1,7 @@
 //This is an example code for Navigation Drawer with Custom Side bar//
 //This Example is for React Navigation 3.+//
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import RequestHandler from '../../util/RESTRequestHandler'
 import {Button} from "native-base";
@@ -44,7 +44,7 @@ export default class CustomSidebarMenu extends Component {
             {
                 navOptionThumb: 'assessment',
                 navOptionName: 'Estimate Expenses',
-                screenToNavigate: 'NavScreen3',
+                screenToNavigate: 'NavScreen4',
             },
         ];
 
@@ -68,6 +68,15 @@ export default class CustomSidebarMenu extends Component {
         this.proileImage = RequestHandler.getImageUrl(id);
     };
 
+    _navigateToProfileScreenAsync = async() => {
+        let params = {
+            myProfile: true,
+            profileImage: this.proileImage
+        };
+        await Util.putUserProfileParams(params);
+        await this.props.navigation.navigate('UserProfileScreen');
+    };
+
     render() {
         if(!this.proileImage) {
             <AppLoading/>
@@ -75,10 +84,14 @@ export default class CustomSidebarMenu extends Component {
         return (
             <View style={styles.sideMenuContainer}>
                 {/*Top Large Image */}
-                <Image
-                    source={{uri: this.proileImage}}
-                    style={styles.sideMenuProfileIcon}
-                />
+                <TouchableOpacity onPress={() => {
+                    this._navigateToProfileScreenAsync();
+                }}>
+                    <Image
+                        source={{uri: this.proileImage}}
+                        style={styles.sideMenuProfileIcon}
+                    />
+                </TouchableOpacity>
                 {/*Divider between Top Image and Sidebar Option*/}
                 <View
                     style={{

@@ -114,7 +114,8 @@ export default class LoginScreen extends React.Component {
                 let authToken = {
                     token: loginResp.token,
                     id: loginResp.id,
-                    adminToken: loginResp.adminToken ? loginResp.adminToken : undefined
+                    adminToken: loginResp.adminToken ? loginResp.adminToken : undefined,
+                    username: this.state.login.email,
                 };
                 await Util.putAuthToken(authToken);
                 await Util.putProfilePictureID(loginResp.profilePicID);

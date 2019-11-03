@@ -332,7 +332,8 @@ export default class RegiterScreen extends React.Component {
         if (registerResp.status === "SUCCESS") {
             let authToken = {
                 token: registerResp.token,
-                id: registerResp.id
+                id: registerResp.id,
+                username: email,
             };
             await Util.putAuthToken(authToken);
             await Util.putProfilePictureID(registerResp.profilePicID);

@@ -10,5 +10,10 @@ export default {
     resizeMode: 'contain',
     width: deviceWidth,
     height: deviceHeight
+  },
+
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
   }
 };

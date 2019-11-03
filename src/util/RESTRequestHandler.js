@@ -4,6 +4,49 @@ import * as Crypto from 'expo-crypto';
 
 export default (function () {
 
+    let sendUserProfileRequest = async (username) => {
+        let args = {
+            username: username
+        };
+        return sendPostRequest(args, 'user/profile');
+    };
+
+    let sendFareCalculateRequest = async (argsList) => {
+        let args = {
+            request: argsList
+        };
+        return sendPostRequest(args, 'calculateFare');
+    };
+
+    let sendSummaryRequest = async (locationID) => {
+        let args = {
+            locationID: locationID
+        };
+        return sendPostRequest(args, 'summary');
+    };
+
+    let sendLocationRequest = async (locationID) => {
+        let args = {
+            locationID: locationID
+        };
+        return sendPostRequest(args, 'location');
+    };
+
+    let sendTransportDataRequest = async (requestType) => {
+        let args = {
+            requestType: requestType
+        };
+        return sendPostRequest(args, 'transport');
+    };
+
+    let sendBusInformationRequest = async (from, to) => {
+        let args = {
+            from: from,
+            to: to
+        };
+        return sendPostRequest(args, 'busfare');
+    };
+
     let sendLoginRequest = async (email, password) => {
         const pwdDigest = await Crypto.digestStringAsync(
             Crypto.CryptoDigestAlgorithm.SHA256, password
@@ -71,6 +114,12 @@ export default (function () {
         sendPostRequest: sendPostRequest,
         sendLoginRequest: sendLoginRequest,
         getCountriesList: getCountriesList,
-        getImageUrl: getImageUrl
+        getImageUrl: getImageUrl,
+        sendTransportDataRequest: sendTransportDataRequest,
+        sendBusInformationRequest: sendBusInformationRequest,
+        sendLocationRequest: sendLocationRequest,
+        sendSummaryRequest: sendSummaryRequest,
+        sendFareCalculateRequest: sendFareCalculateRequest,
+        sendUserProfileRequest: sendUserProfileRequest,
     }
 }())

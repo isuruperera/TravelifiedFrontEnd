@@ -1,18 +1,15 @@
 import React from 'react';
-import {ActivityIndicator, StatusBar} from 'react-native';
-import utils from '../../util/Util';
-import { Container, Text } from 'native-base';
+import {Image, Platform} from 'react-native';
+import {Container} from 'native-base';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import {Platform, Image} from 'react-native';
 import {AppLoading} from "expo";
-
 
 const touristIcon = require('../../../assets/images/tourist.png');
 
-export default class AuthLoadingScreen extends React.Component {
+export default class MainMapScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -23,7 +20,7 @@ export default class AuthLoadingScreen extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         if (Platform.OS === 'android' && !Constants.isDevice) {
             this.setState({
                 errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -31,7 +28,23 @@ export default class AuthLoadingScreen extends React.Component {
         } else {
             this._getLocationAsync();
         }
+        //this._watchLocationAsync();
     }
+
+    _watchLocationAsync = async () => {
+
+        this.watchId = await navigator.geolocation.watchPosition(
+            (position) => {
+                console.log(position);
+                let state = this.state;
+                state.location.coords = position.coords;
+                this.setState(state);
+            },
+            (error) => this.setState({ error: error.message }),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 0, distanceFilter: 1},
+
+        );
+    };
 
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);

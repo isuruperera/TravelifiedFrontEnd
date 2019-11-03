@@ -1,4 +1,5 @@
 {
   "AuthToken" : "AUTH_TOK",
-  "ProfilePicID" : "PROF_PIC_ID"
+  "ProfilePicID" : "PROF_PIC_ID",
+  "UserProfileParams" : "USR_PROF_PARAMS"
 }

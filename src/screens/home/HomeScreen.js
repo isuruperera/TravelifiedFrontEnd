@@ -1,5 +1,3 @@
-//This is an example code for Navigation Drawer with Custom Side bar//
-//This Example is for React Navigation 3.+//
 import React, { Component } from 'react';
 //import react in our code.
 import {
@@ -22,11 +20,12 @@ import {
 
 //Import all the screens
 import MainMapScreen from './MainMapScreen';
-import Screen2 from '../test/TestScreen';
+import TravelExpenseScreen from '../travelexpenses/TravelExpenseEstimateScreen';
 import Screen3 from '../test/TestScreen';
+import UserProfileScreen from '../userprofile/UserProfile';
 
 //Import Custom Sidebar
-import CustomSidebarMenu from '../../theme/components/SideMenu';
+import CustomSidebarMenu from './SideMenu';
 
 global.currentScreenIndex = 0;
 
@@ -74,7 +73,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
 const Screen2_StackNavigator = createStackNavigator({
     //All the screen from the Second Option will be indexed here
     Second: {
-        screen: Screen2,
+        screen: Screen3,
         navigationOptions: ({ navigation }) => ({
             title: 'Demo Screen 2',
             headerLeft: <HomeScreen navigationProps={navigation} />,
@@ -93,6 +92,21 @@ const Screen3_StackNavigator = createStackNavigator({
         screen: Screen3,
         navigationOptions: ({ navigation }) => ({
             title: 'Demo Screen 3',
+            headerLeft: <HomeScreen navigationProps={navigation} />,
+            headerStyle: {
+                backgroundColor: '#00C691',
+            },
+            headerTintColor: '#000',
+        }),
+    },
+});
+
+
+const TravelExpenses_StackNavigator = createStackNavigator({
+    Third: {
+        screen: TravelExpenseScreen,
+        navigationOptions: ({ navigation }) => ({
+            title: 'Estimate Expenses',
             headerLeft: <HomeScreen navigationProps={navigation} />,
             headerStyle: {
                 backgroundColor: '#00C691',
@@ -122,6 +136,18 @@ const DrawerNavigatorExample = createDrawerNavigator(
             screen: Screen3_StackNavigator,
             navigationOptions: {
                 drawerLabel: 'Demo Screen 3',
+            },
+        },
+        NavScreen4: {
+            screen: TravelExpenses_StackNavigator,
+            navigationOptions: {
+                drawerLabel: 'Estimate Expenses',
+            },
+        },
+        UserProfileScreen: {
+            screen: UserProfileScreen,
+            navigationOptions: {
+                drawerLabel: 'My Profile',
             },
         },
     },
