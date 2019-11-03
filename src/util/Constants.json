@@ -1,5 +1,7 @@
 {
   "AuthToken" : "AUTH_TOK",
   "ProfilePicID" : "PROF_PIC_ID",
-  "UserProfileParams" : "USR_PROF_PARAMS"
+  "UserProfileParams" : "USR_PROF_PARAMS",
+  "AttractionProfileParams" : "ATTR_PROF_PARAMS",
+  "ServiceProfileParams" : "SVC_PROF_PARAMS"
 }

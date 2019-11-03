@@ -172,10 +172,10 @@ export default class TravelExpenseEstimateScreen extends React.Component {
             let townData = undefined;
             if (state.currentFromTown) {
                 townCoords = await RequestHandler.sendLocationRequest(state.currentFromTown);
-                townData = await RequestHandler.sendSummaryRequest(state.currentFromTown);
+                townData = await RequestHandler.sendSummaryRequest(townCoords.longitude, townCoords.latitude);
             } else {
                 townCoords = await RequestHandler.sendLocationRequest(state.currentTown);
-                townData = await RequestHandler.sendSummaryRequest(state.currentFromTown);
+                townData = await RequestHandler.sendSummaryRequest(townCoords.longitude, townCoords.latitude);
             }
             console.log(townData);
             if (townCoords && townCoords.status === 'SUCCESS') {

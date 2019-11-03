@@ -4,6 +4,36 @@ import * as Crypto from 'expo-crypto';
 
 export default (function () {
 
+    let getAllMyFriends = async (username) => {
+        let args = {
+            username: username
+        };
+        return sendPostRequest(args, 'getUserFriends');
+    };
+
+    let getAllServiceComments = async (serviceId) => {
+        let args = {
+            serviceId: serviceId
+        };
+        return sendPostRequest(args, 'getAllServiceComments');
+    };
+
+    let sendDiscoverAttaractionsRequest = async (longitude, latitude) => {
+        let args = {
+            longitude: longitude,
+            latitude: latitude
+        };
+        return sendPostRequest(args, 'discoverTouristAttraction');
+    };
+
+    let sendDiscoverServiceRequest = async (longitude, latitude) => {
+        let args = {
+            longitude: longitude,
+            latitude: latitude
+        };
+        return sendPostRequest(args, 'discoverTouristService');
+    };
+
     let sendUserProfileRequest = async (username) => {
         let args = {
             username: username
@@ -18,9 +48,10 @@ export default (function () {
         return sendPostRequest(args, 'calculateFare');
     };
 
-    let sendSummaryRequest = async (locationID) => {
+    let sendSummaryRequest = async (lat, lng) => {
         let args = {
-            locationID: locationID
+            latitude: lat,
+            longitude: lng
         };
         return sendPostRequest(args, 'summary');
     };
@@ -57,6 +88,18 @@ export default (function () {
 
         };
         return sendPostRequest(args, 'login');
+    };
+
+    let sendServiceRatingComment = async (userId, serviceId, rating, comment, photo) => {
+        let args = {
+            userId: userId,
+            serviceId: serviceId,
+            rating: rating,
+            comment: comment,
+            photo: photo
+        };
+        console.log(args);
+        return sendPostRequest(args, 'addServiceComment');
     };
 
     let sendRegisterRequest = async (email, fName, lName, phone, country, gender, password, image) => {
@@ -121,5 +164,10 @@ export default (function () {
         sendSummaryRequest: sendSummaryRequest,
         sendFareCalculateRequest: sendFareCalculateRequest,
         sendUserProfileRequest: sendUserProfileRequest,
+        sendDiscoverAttaractionsRequest: sendDiscoverAttaractionsRequest,
+        sendDiscoverServiceRequest: sendDiscoverServiceRequest,
+        sendServiceRatingComment: sendServiceRatingComment,
+        getAllServiceComments: getAllServiceComments,
+        getAllMyFriends: getAllMyFriends
     }
 }())

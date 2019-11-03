@@ -23,6 +23,8 @@ import MainMapScreen from './MainMapScreen';
 import TravelExpenseScreen from '../travelexpenses/TravelExpenseEstimateScreen';
 import Screen3 from '../test/TestScreen';
 import UserProfileScreen from '../userprofile/UserProfile';
+import AttractionScreen from '../attraction/AttractionProfile';
+import ServiceScreen from '../service/ServiceProfile';
 
 //Import Custom Sidebar
 import CustomSidebarMenu from './SideMenu';
@@ -148,6 +150,18 @@ const DrawerNavigatorExample = createDrawerNavigator(
             screen: UserProfileScreen,
             navigationOptions: {
                 drawerLabel: 'My Profile',
+            },
+        },
+        AttractionScreen: {
+            screen: AttractionScreen,
+            navigationOptions: {
+                drawerLabel: 'Tourist Attraction',
+            },
+        },
+        ServiceScreen: {
+            screen: ServiceScreen,
+            navigationOptions: {
+                drawerLabel: 'Tourist Service',
             },
         },
     },

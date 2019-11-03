@@ -63,6 +63,40 @@ export default (function () {
         }
     };
 
+    let putAttractionProfileParams = async (params) => {
+        try {
+            await AsyncStorage.setItem(Constants.AttractionProfileParams, JSON.stringify(params));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    let getAttractionProfileParams = async () => {
+        try {
+            let params = await AsyncStorage.getItem(Constants.AttractionProfileParams);
+            return JSON.parse(params);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    let putServiceProfileParams = async (params) => {
+        try {
+            await AsyncStorage.setItem(Constants.ServiceProfileParams, JSON.stringify(params));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    let getServiceProfileParams = async () => {
+        try {
+            let params = await AsyncStorage.getItem(Constants.ServiceProfileParams);
+            return JSON.parse(params);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return {
         getAuthToken : getAuthToken,
         putAuthToken: putAuthToken,
@@ -70,6 +104,10 @@ export default (function () {
         getProfilePictureID: getProfilePictureID,
         putProfilePictureID: putProfilePictureID,
         putUserProfileParams: putUserProfileParams,
-        getUserProfileParams: getUserProfileParams
+        getUserProfileParams: getUserProfileParams,
+        putAttractionProfileParams: putAttractionProfileParams,
+        getAttractionProfileParams: getAttractionProfileParams,
+        putServiceProfileParams: putServiceProfileParams,
+        getServiceProfileParams: getServiceProfileParams
     }
 }())

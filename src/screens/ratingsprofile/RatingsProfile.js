@@ -51,7 +51,7 @@ export default class RatingsProfile extends Component {
         ey: (this.windowWidth/2) * Math.sin((i*2*Math.PI/(ratingsList.length))) + this.windowWidth/2,
         rx: (ratingsList[i].rating/5) * (this.windowWidth/2) * Math.cos((i*2*Math.PI/(ratingsList.length))) + this.windowWidth/2,
         ry: (ratingsList[i].rating/5) * (this.windowWidth/2) * Math.sin((i*2*Math.PI/(ratingsList.length))) + this.windowWidth/2
-      }
+      };
       this.ratingsSupportLines.push(rating);
     }
     for(var i=0;i<this.ratingsSupportLines.length;i++) {
@@ -85,12 +85,12 @@ export default class RatingsProfile extends Component {
                         onRefresh={() => this._loadProfileAsync()}
                     />
                 }
-            > 
+            >
             <Svg
               height = {this.windowWidth}
               width= {this.windowWidth}
             >
-              <Svg.Polygon 
+              <Svg.Polygon
                 points={this.ratingsPolygon}
                 fill="blue"
                 stroke="purple"
@@ -132,7 +132,7 @@ export default class RatingsProfile extends Component {
               }
             </Svg>
             </ScrollView>
-          
+
         </Content>
         <Button full dark
                 onPress = {() => {this.props.navigation.navigate('Home')}} >
