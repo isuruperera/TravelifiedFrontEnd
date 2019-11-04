@@ -34,6 +34,7 @@
     "react-native-sectioned-multi-select": "^0.7.1",
     "react-native-maps": "^0.24.0",
     "react-native-material-textfield": "^0.12.0",
+    "react-native-modal-datetime-picker": "^7.6.0",
     "react-native-ratings": "^6.5.0",
     "react-native-reanimated": "~1.1.0",
     "react-native-searchable-dropdown": "^1.1.1",

@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {Button, Container, Content, H1, H3, Icon, Item, Spinner} from 'native-base';
+import {Button, Container, Content, H1, H2, H3, Spinner, View, Icon, Item, Segment} from 'native-base';
 
 import Util from '../../util/Util';
 import {Dimensions, Image, RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import Svg, {Circle, Line, Polygon, Text} from 'react-native-svg';
 import RequestHandler from '../../util/RESTRequestHandler'
-
+import {AirbnbRating, Rating} from 'react-native-ratings';
 
 const config = require('../../config/config.json');
 
 
-export default class UserProfile extends Component {
+export default class FriendProfile extends Component {
 
 
     constructor(props) {
@@ -25,6 +25,13 @@ export default class UserProfile extends Component {
             center: {x: ((Dimensions.get('window').width) / 2), y: ((Dimensions.get('window').height) / 2) - 250},
             sampleRatings: undefined,
             sampleRatings2: undefined,
+            screen: 1,
+            adventureRating: 5,
+            entertainerRating: 5,
+            friendInNeedRating: 5,
+            masterChef: 5,
+            animalLover: 5,
+            friendName: undefined,
             isLoading: true,
         }
     }
@@ -47,14 +54,14 @@ export default class UserProfile extends Component {
     }
 
     async _loadScreenParams() {
-        let screenParams = await Util.getUserProfileParams();
+        let screenParams = await Util.getFriendProfileParams();
+        console.log("screenParams");
         console.log(screenParams);
         let state = this.state;
-        if (screenParams.myProfile) {
-            let token = await Util.getAuthToken();
-            let userProfile = await RequestHandler.sendUserProfileRequest(token.username);
+        if (screenParams.friendProfile) {
+            let userProfile = await RequestHandler.sendUserProfileRequest(screenParams.username);
             if (userProfile.status === 'SUCCESS') {
-                console.log("userProfile");
+                state.friendName = screenParams.username;
                 console.log(userProfile);
                 let ratingsList = userProfile.userRatings;
                 state.userProfile = userProfile.user;
@@ -62,6 +69,7 @@ export default class UserProfile extends Component {
                 console.log("Ratings List: ");
                 console.log(ratingsList);
                 console.log("Curr State: ");
+                console.log("Curr State:   ");
                 console.log(state);
                 state.ratingsProfile1 = {
                     ratingsSupportLines: [],
@@ -93,7 +101,6 @@ export default class UserProfile extends Component {
         state.isLoading = false;
         console.log(state);
         this.setState(state);
-        //this.forceUpdate();
     }
 
     render() {
@@ -109,9 +116,39 @@ export default class UserProfile extends Component {
         }
         console.log("Rendering State H1");
         console.log(this.state);
-        console.log(this.state.userImageURL);
+        if (this.state.screen === 1) {
+            return this._returnMainScreen();
+        } else if (this.state.screen === 2) {
+            return this._returRatingsScreen();
+        } else {
+            return this._returnMainScreen();
+        }
+
+    }
+
+    _returnMainScreen = () => {
         return (
             <Container style={{marginTop: 20}}>
+                <Segment>
+                    <Button first style={{backgroundColor: this.state.tab1Color, width: '50%'}}
+                            onPress={(value) => {
+                                this.state.screen = 1;
+                                this.state.tab1Color = '#9195ae';
+                                this.state.tab2Color = '#00ae7e';
+                                this.forceUpdate();
+                            }}>
+                        <H2 style={{marginLeft: 5}}>Profile</H2>
+                    </Button>
+                    <Button style={{backgroundColor: this.state.tab2Color, width: '50%'}}
+                            onPress={(value) => {
+                                this.state.screen = 2;
+                                this.state.tab2Color = '#9195ae';
+                                this.state.tab1Color = '#00ae7e';
+                                this.forceUpdate();
+                            }}>
+                        <H2 style={{marginLeft: 5}}>Rate</H2>
+                    </Button>
+                </Segment>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -132,36 +169,20 @@ export default class UserProfile extends Component {
                             style={styles.profileIcon}
                         />
                     )}
-                    {
-                        this.state.userProfile.phone && (
-                            <Item style={{marginRight: 10, marginLeft: 20, marginTop: 10}}>
-                                <Icon name='call' size={25} color="#808080"/>
-                                <H3 style={{
-                                    alignSelf: 'flex-start',
-                                    color: 'rgba(0,4,19,0.66)'
-                                }}> {this.state.userProfile.phone} </H3>
-                            </Item>
-                        )
-
-                    }
-                    {
-                        this.state.userProfile.email && (
-                            <Item style={{marginRight: 10, marginLeft: 20, marginTop: 10}}>
-                                <Icon name='mail' size={25} color="#808080"/>
-                                <H3 style={{
-                                    alignSelf: 'flex-start',
-                                    color: 'rgba(0,4,19,0.66)'
-                                }}> {this.state.userProfile.email} </H3>
-                            </Item>
-                        )
-
-                    }
+                    <Item style={{marginRight: 10, marginLeft: 20, marginTop: 10}}>
+                        <Icon name= 'call' size={25} color="#808080"/>
+                        <H3 style = {{alignSelf: 'flex-start', color: 'rgba(0,4,19,0.66)'}}> {this.state.userProfile.phone} </H3>
+                    </Item>
+                    <Item style={{marginRight: 10, marginLeft: 20, marginTop: 10}}>
+                        <Icon name= 'mail' size={25} color="#808080"/>
+                        <H3 style = {{alignSelf: 'flex-start', color: 'rgba(0,4,19,0.66)'}}> {this.state.userProfile.email} </H3>
+                    </Item>
                     <Item style={{marginRight: 10, marginLeft: 20, marginTop: 25, marginBottom: 10}}>
                         <H3 style = {{alignSelf: 'flex-start', color: 'rgba(0,4,19,0.66)'}}> Ratings Profile </H3>
                     </Item>
-                    {this.state.ratingsProfile1.ratingsPolygon === "" && (
+                    { this.state.ratingsProfile1.ratingsPolygon === "" && (
                         <Item style={{marginRight: 10, marginLeft: 20, marginTop: 25, marginBottom: 10}}>
-                            <H3 style={{alignSelf: 'flex-start', color: 'red'}}> Nobody has rated this user yet!</H3>
+                            <H3 style = {{alignSelf: 'flex-start', color: 'red'}}> Nobody has rated this user yet!</H3>
                         </Item>
                     )
 
@@ -220,13 +241,170 @@ export default class UserProfile extends Component {
                 </ScrollView>
                 <Button full style={{backgroundColor: '#00ae7e', width: '100%'}}
                         onPress={() => {
-                            this.props.navigation.navigate('NavScreen1')
+                            this.props.navigation.goBack();
                         }}>
                     <H1>BACK</H1>
                 </Button>
             </Container>
         );
-    }
+    };
+
+    _handleAdventureCompleted = async (rating) => {
+        console.log("Rating is: " + rating);
+        let state = this.state;
+        if (rating) {
+            state.adventureRating = rating;
+        }
+        console.log(state);
+        this.setState(state);
+    };
+
+    _handleEntertainerCompleted = async (rating) => {
+        console.log("Rating is: " + rating);
+        let state = this.state;
+        if (rating) {
+            state.entertainerRating = rating;
+        }
+        console.log(state);
+        this.setState(state);
+    };
+
+    _handleFriendCompleted = async (rating) => {
+        console.log("Rating is: " + rating);
+        let state = this.state;
+        if (rating) {
+            state.friendInNeedRating = rating;
+        }
+        console.log(state);
+        this.setState(state);
+    };
+
+    _handleMasterChefCompleted = async (rating) => {
+        console.log("Rating is: " + rating);
+        let state = this.state;
+        if (rating) {
+            state.masterChef = rating;
+        }
+        console.log(state);
+        this.setState(state);
+    };
+
+    _handleAnimalLoverCompleted = async (rating) => {
+        console.log("Rating is: " + rating);
+        let state = this.state;
+        if (rating) {
+            state.animalLover = rating;
+        }
+        console.log(state);
+        this.setState(state);
+    };
+
+    _returRatingsScreen = () => {
+        return (
+            <Container style={{marginTop: 20}}>
+                <Segment>
+                    <Button first style={{backgroundColor: this.state.tab1Color, width: '50%'}}
+                            onPress={(value) => {
+                                this.state.screen = 1;
+                                this.state.tab1Color = '#9195ae';
+                                this.state.tab2Color = '#00ae7e';
+                                this.forceUpdate();
+                            }}>
+                        <H2 style={{marginLeft: 5}}>Profile</H2>
+                    </Button>
+                    <Button style={{backgroundColor: this.state.tab2Color, width: '50%'}}
+                            onPress={(value) => {
+                                this.state.screen = 2;
+                                this.state.tab2Color = '#9195ae';
+                                this.state.tab1Color = '#00ae7e';
+                                this.forceUpdate();
+                            }}>
+                        <H2 style={{marginLeft: 5}}>Rate</H2>
+                    </Button>
+                </Segment>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isLoading}
+                            onRefresh={() => this._loadScreenParams()}
+                        />
+                    }
+                >
+                    <H3 style = {{alignSelf: 'center', color: 'rgba(0,4,19,0.66)', marginTop: 15}}> Adventurer </H3>
+                    <AirbnbRating
+                        count={5}
+                        reviews={["Terrible", "Bad", "Normal", "Good", "Very Good"]}
+                        defaultRating={5}
+                        size={30}
+                        onFinishRating={this._handleAdventureCompleted}
+                    />
+                    <H3 style = {{alignSelf: 'center', color: 'rgba(0,4,19,0.66)'}}> Entertainer </H3>
+                    <AirbnbRating
+                        count={5}
+                        reviews={["Terrible", "Bad", "Normal", "Good", "Very Good"]}
+                        defaultRating={5}
+                        size={30}
+                        onFinishRating={this._handleEntertainerCompleted}
+                    />
+                    <H3 style = {{alignSelf: 'center', color: 'rgba(0,4,19,0.66)'}}> Friend In Need </H3>
+                    <AirbnbRating
+                        count={5}
+                        reviews={["Terrible", "Bad", "Normal", "Good", "Very Good"]}
+                        defaultRating={5}
+                        size={30}
+                        onFinishRating={this._handleFriendCompleted}
+                    />
+                    <H3 style = {{alignSelf: 'center', color: 'rgba(0,4,19,0.66)'}}> Master Chef </H3>
+                    <AirbnbRating
+                        count={5}
+                        reviews={["Terrible", "Bad", "Normal", "Good", "Very Good"]}
+                        defaultRating={5}
+                        size={30}
+                        onFinishRating={this._handleMasterChefCompleted}
+                    />
+                    <H3 style = {{alignSelf: 'center', color: 'rgba(0,4,19,0.66)'}}> Animal Lover </H3>
+                    <AirbnbRating
+                        count={5}
+                        reviews={["Terrible", "Bad", "Normal", "Good", "Very Good"]}
+                        defaultRating={5}
+                        size={30}
+                        onFinishRating={this._handleAnimalLoverCompleted}
+                    />
+                </ScrollView>
+                <Button full style={{backgroundColor: '#00ae7e', width: '100%', marginBottom: 5}}
+                        onPress={() => {
+                            this._addRating();
+                        }}>
+                    <H1>RATE</H1>
+                </Button>
+                <Button full style={{backgroundColor: '#00ae7e', width: '100%'}}
+                        onPress={() => {
+                            this.props.navigation.goBack();
+                        }}>
+                    <H1>BACK</H1>
+                </Button>
+            </Container>
+        );
+    };
+    _addRating = async () => {
+        let state = this.state;
+        let token = await Util.getAuthToken();
+        let response = await RequestHandler.addUserRating(
+            token.username,
+            state.friendName,
+            state.adventureRating,
+            state.entertainerRating,
+            state.friendInNeedRating,
+            state.masterChef,
+            state.animalLover
+        );
+        if(response.status === 'SUCCESS') {
+            alert("Successfully added the rating!");
+        } else {
+            alert("Failed to add rating");
+        }
+        this._loadScreenParams();
+    };
 
 
     async _handleSaveAsync() {

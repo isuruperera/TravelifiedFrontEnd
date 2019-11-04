@@ -21,12 +21,26 @@ export default class FloatingLabelExample extends Component {
         }
     }
 
-    componentDidMount() {
+    _componentFocused = () => {
         this._loadScreenParams();
+    };
+
+    componentWillUnmount() {
+        this._sub.remove();
+    }
+
+    componentDidMount() {
+        this._componentFocused();
+
+        this._sub = this.props.navigation.addListener(
+            'didFocus',
+            this._componentFocused
+        );
     }
 
     async _loadScreenParams() {
         let screenParams = await Util.getAttractionProfileParams();
+        console.log("screenParams Attraction Screen");
         console.log(screenParams);
         let state = this.state;
         if (screenParams) {
