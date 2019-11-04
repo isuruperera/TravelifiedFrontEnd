@@ -20,11 +20,15 @@ import {
 
 //Import all the screens
 import MainMapScreen from './MainMapScreen';
-import TravelExpenseScreen from '../travelexpenses/TravelExpenseEstimateScreen';
-import Screen3 from '../test/TestScreen';
+import TravelExpenseScreen from '../travelexpenses/TravelExpensesEstimateScreen';
 import UserProfileScreen from '../userprofile/UserProfile';
 import AttractionScreen from '../attraction/AttractionProfile';
 import ServiceScreen from '../service/ServiceProfile';
+import EventsScreen from '../events/EventsScreen';
+import SingleEventsScreen from '../events/SingleEventScreen';
+import FriendsScreen from '../friends/Friends';
+import FriendProfileScreen from '../userprofile/FriendProfile';
+import AdminScreen from '../admin/AdminScreen';
 
 //Import Custom Sidebar
 import CustomSidebarMenu from './SideMenu';
@@ -71,39 +75,6 @@ const FirstActivity_StackNavigator = createStackNavigator({
     },
 });
 
-//Stack Navigator for the Second Option of Navigation Drawer
-const Screen2_StackNavigator = createStackNavigator({
-    //All the screen from the Second Option will be indexed here
-    Second: {
-        screen: Screen3,
-        navigationOptions: ({ navigation }) => ({
-            title: 'Demo Screen 2',
-            headerLeft: <HomeScreen navigationProps={navigation} />,
-            headerStyle: {
-                backgroundColor: '#00C691',
-            },
-            headerTintColor: '#000',
-        }),
-    },
-});
-
-//Stack Navigator for the Third Option of Navigation Drawer
-const Screen3_StackNavigator = createStackNavigator({
-    //All the screen from the Third Option will be indexed here
-    Third: {
-        screen: Screen3,
-        navigationOptions: ({ navigation }) => ({
-            title: 'Demo Screen 3',
-            headerLeft: <HomeScreen navigationProps={navigation} />,
-            headerStyle: {
-                backgroundColor: '#00C691',
-            },
-            headerTintColor: '#000',
-        }),
-    },
-});
-
-
 const TravelExpenses_StackNavigator = createStackNavigator({
     Third: {
         screen: TravelExpenseScreen,
@@ -129,15 +100,15 @@ const DrawerNavigatorExample = createDrawerNavigator(
             },
         },
         NavScreen2: {
-            screen: Screen2_StackNavigator,
+            screen: FriendsScreen,
             navigationOptions: {
                 drawerLabel: 'Menu 2',
             },
         },
         NavScreen3: {
-            screen: Screen3_StackNavigator,
+            screen: EventsScreen,
             navigationOptions: {
-                drawerLabel: 'Demo Screen 3',
+                drawerLabel: 'Tourist Events',
             },
         },
         NavScreen4: {
@@ -162,6 +133,30 @@ const DrawerNavigatorExample = createDrawerNavigator(
             screen: ServiceScreen,
             navigationOptions: {
                 drawerLabel: 'Tourist Service',
+            },
+        },
+        EventsScreen: {
+            screen: EventsScreen,
+            navigationOptions: {
+                drawerLabel: 'Tourist Event',
+            },
+        },
+        SingleEventsScreen: {
+            screen: SingleEventsScreen,
+            navigationOptions: {
+                drawerLabel: 'Tourist Event',
+            },
+        },
+        FriendProfileScreen: {
+            screen: FriendProfileScreen,
+            navigationOptions: {
+                drawerLabel: 'Friend Profile',
+            },
+        },
+        AdminScreen: {
+            screen: AdminScreen,
+            navigationOptions: {
+                drawerLabel: 'Admin Screen',
             },
         },
     },

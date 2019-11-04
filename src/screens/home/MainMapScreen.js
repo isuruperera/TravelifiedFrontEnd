@@ -130,7 +130,7 @@ export default class MainMapScreen extends React.Component {
     };
 
     _handleOnClickAttraction = async (attraction) => {
-        console.log("attraction");
+        console.log("attraction SELECTED FOR SCREEN");
         console.log(attraction);
         await Util.putAttractionProfileParams(attraction);
         await this.props.navigation.navigate('AttractionScreen');
@@ -177,9 +177,8 @@ export default class MainMapScreen extends React.Component {
                                     speed: this.state.location.speed
                                 }}
                                 title={attraction.attractionName}
-                                description={attraction.description}
-                                key={'ATR'+attraction.attaractionId}
-                                id={'ATR'+attraction.attaractionId}
+                                key={'ATR'+attraction.attaractionId + (new Date().getTime())}
+                                id={'ATR'+attraction.attaractionId + (new Date().getTime())}
                                 onPress={(value) => this._handleOnClickAttraction(attraction)}
                             >
                                 <Image source={mapIcon} style={{ width: 50, height: 50 }} />
@@ -192,8 +191,8 @@ export default class MainMapScreen extends React.Component {
                                 coordinate={service.location}
                                 title={service.name +''+ (service.fee ? ' | ' + service.fee + ' LKR': '')}
                                 description={service.description}
-                                key={'SVC'+service.serviceId}
-                                id={'SVC'+service.serviceId}
+                                key={'SVC'+service.serviceId + (new Date().getTime())}
+                                id={'SVC'+service.serviceId + (new Date().getTime())}
                                 onPress={(value) => this._handleOnClickService(service)}
                             >
                                 <Image source={shopIcon} style={{ width: 50, height: 50 }} />

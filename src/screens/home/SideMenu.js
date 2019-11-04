@@ -20,6 +20,7 @@ export default class CustomSidebarMenu extends Component {
         //Array of the sidebar navigation option with icon and screen to navigate
         //This screens can be any screen defined in Drawer Navigator in App.js
         //You can find the Icons from here https://material.io/tools/icons/
+
         this.items = [
             {
                 navOptionThumb: 'explore',
@@ -58,14 +59,14 @@ export default class CustomSidebarMenu extends Component {
             this.items.push({
                 navOptionThumb: 'lock',
                 navOptionName: 'Admin Area',
-                screenToNavigate: 'NavScreen3',
+                screenToNavigate: 'AdminScreen',
             });
         }
     };
 
     _getProfilePictureAsync = async() => {
         let id = await Util.getProfilePictureID();
-        this.proileImage = RequestHandler.getImageUrl(id);
+        this.proileImage = await RequestHandler.getImageUrl(id);
     };
 
     _navigateToProfileScreenAsync = async() => {

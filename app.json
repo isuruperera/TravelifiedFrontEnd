@@ -29,7 +29,12 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.cyntex.GamifiedTourismApp"
+      "package": "com.cyntex.GamifiedTourismApp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBDtu_C1py_FEZzFJRSXMIN-GTGQC-tGTg"
+        }
+      }
     },
     "description": ""
   }

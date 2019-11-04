@@ -48,8 +48,21 @@ export default class ServiceProfile extends Component {
         }
     }
 
-    componentDidMount() {
+    _componentFocused = () => {
         this._loadScreenParams();
+    };
+
+    componentWillUnmount() {
+        this._sub.remove();
+    }
+
+    componentDidMount() {
+        this._componentFocused();
+
+        this._sub = this.props.navigation.addListener(
+            'didFocus',
+            this._componentFocused
+        );
     }
 
     async _loadScreenParams() {
@@ -232,7 +245,6 @@ export default class ServiceProfile extends Component {
                         </Button>
                     </Segment>
                     <Content>
-
                         <Avatar rounded xlarge center
                                 source={this.state.image ? this.state.image : userImage}
                                 style={{height: 250, width: 250, alignSelf: 'center', marginTop: 20}}

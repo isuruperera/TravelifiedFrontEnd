@@ -46,6 +46,23 @@ export default (function () {
         }
     };
 
+    let putFriendProfileParams = async (params) => {
+        try {
+            await AsyncStorage.setItem(Constants.FriendProfileParams, JSON.stringify(params));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    let getFriendProfileParams = async () => {
+        try {
+            let params = await AsyncStorage.getItem(Constants.FriendProfileParams);
+            return JSON.parse(params);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     let putUserProfileParams = async (params) => {
         try {
             await AsyncStorage.setItem(Constants.UserProfileParams, JSON.stringify(params));
@@ -97,6 +114,23 @@ export default (function () {
         }
     };
 
+    let putEventProfile = async (params) => {
+        try {
+            await AsyncStorage.setItem(Constants.EventProfileParams, JSON.stringify(params));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    let getEventProfileParams = async () => {
+        try {
+            let params = await AsyncStorage.getItem(Constants.EventProfileParams);
+            return JSON.parse(params);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return {
         getAuthToken : getAuthToken,
         putAuthToken: putAuthToken,
@@ -108,6 +142,10 @@ export default (function () {
         putAttractionProfileParams: putAttractionProfileParams,
         getAttractionProfileParams: getAttractionProfileParams,
         putServiceProfileParams: putServiceProfileParams,
-        getServiceProfileParams: getServiceProfileParams
+        getServiceProfileParams: getServiceProfileParams,
+        putEventProfile: putEventProfile,
+        getEventProfileParams: getEventProfileParams,
+        putFriendProfileParams: putFriendProfileParams,
+        getFriendProfileParams: getFriendProfileParams
     }
 }())
